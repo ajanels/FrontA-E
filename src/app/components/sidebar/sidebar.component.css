@@ -1,0 +1,87 @@
+.sidebar {
+    width: 250px; /* Tamaño cuando está expandido */
+    background: #1e3a8a; /* Azul oscuro */
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+    padding-top: 10px;
+  }
+  
+  .sidebar.collapsed {
+    width: 60px; /* Tamaño cuando está contraído */
+  }
+  
+  .toggle-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    position: relative; /* Para que esté dentro del sidebar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .menu-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-items li {
+    padding: 15px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .menu-items li:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .menu-items li.active {
+    background: #2563eb; /* Azul más brillante */
+    font-weight: bold;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  li {
+    padding: 10px;
+    transition: background 0.3s;
+  }
+  
+  li.active {
+    background-color: #1d4ed8; /* Azul más oscuro */
+    font-weight: bold;
+  }
+  
+  li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+  }
+  
+  li a i {
+    margin-right: 10px;
+  }
+  
