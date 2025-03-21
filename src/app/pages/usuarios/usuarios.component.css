@@ -15,4 +15,203 @@
   .sidebar:not(.expanded) + .content {
     margin-left: 80px;
   }
-  
+
+  /* Estilos generales */
+.usuarios-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    max-width: 95%;
+    margin: auto;
+}
+
+/* Estilo del título */
+.usuarios-container h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #88b5ff;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+/* Barra de búsqueda */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f0f0f0;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    font-size: 1rem;
+    padding: 8px;
+}
+
+.search-bar button {
+    background: #d9d9d9;
+    border: none;
+    font-size: 1.2rem;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-bar button:hover {
+    background: #c0c0c0;
+}
+
+/* Estilo de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Encabezado de la tabla */
+thead {
+    background: #ddd;
+    text-align: left;
+}
+
+thead th {
+    padding: 10px;
+    font-weight: bold;
+    border: 1px solid #bbb;
+    text-align: center;
+    border-radius: 5px;
+}
+
+/* Filas de la tabla */
+tbody tr {
+    background: #ffffff;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+tbody tr:nth-child(even) {
+    background: #b7e3ff; /* Azul claro */
+}
+
+tbody tr:hover {
+    background: #8fccff;
+}
+
+/* Celdas */
+td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #bbb;
+}
+
+/* Botones de acciones */
+td button {
+    border: none;
+    padding: 5px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    background: none;
+}
+
+/* Botón editar */
+td button:nth-child(1) {
+    color: #2d89ef;
+}
+
+/* Botón eliminar */
+td button:nth-child(2) {
+    color: #ff0000;
+}
+
+/* Estilo del contenedor principal */
+.content {
+    padding: 20px;
+    margin-left: 220px; /* Espacio para el sidebar */
+    transition: margin-left 0.3s;
+}
+
+.expanded {
+    margin-left: 60px; /* Ajusta cuando el sidebar se colapsa */
+}
+
+/* Estilos para el Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Botón de cerrar */
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Estilizar los formularios */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form input, form select {
+    margin: 8px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Botones */
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

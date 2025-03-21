@@ -12,5 +12,4 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
   standalone: true,
   imports: [CommonModule,RouterModule,SidebarComponent]
 })
-export class PrincipalComponent {
-}
+export class PrincipalComponent {}
