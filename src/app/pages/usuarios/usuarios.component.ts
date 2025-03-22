@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -21,6 +22,8 @@ export class UsuariosComponent implements OnInit  {
   roles: any[] = [];
   modalAbierto: boolean = false;
   editando = false;
+  intervalId: any;
+
   usuario: any = {
     usuId: '',
     usuPNombre: '',
@@ -52,9 +55,20 @@ export class UsuariosComponent implements OnInit  {
 
   ngOnInit(): void {
     this.cargarUsuarios();
-    this.cargarRoles(); // Método para cargar los roles
-
+    this.cargarRoles();
+  
+    // Actualizar la tabla cada 1 segundo
+    this.intervalId = setInterval(() => {
+      this.cargarUsuarios();
+    }, 1000);
   }
+
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+  
 
   cargarUsuarios() {
     this.usuarioService.getUsuarios().subscribe({
@@ -82,9 +96,6 @@ export class UsuariosComponent implements OnInit  {
     );
   }
   
-
-  
-
   abrirModal(editando = false, usuarioExistente: any = null) {
     this.modalAbierto = true;
     this.editando = editando;
@@ -169,13 +180,21 @@ guardarUsuario() {
     console.log("Editando usuario con ID:", this.usuario.usuId);
     this.usuarioService.updateUsuario(this.usuario.usuId, this.usuario).subscribe(
       response => {
-        console.log("Usuario actualizado correctamente:", response);
+        Swal.fire({
+          icon: 'success',
+          title: 'Usuario actualizado',
+          text: 'Los cambios se guardaron correctamente.'
+        });
         this.cargarUsuarios();
         this.cerrarModal();
       },
       error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al actualizar',
+          text: 'No se pudo actualizar el usuario.'
+        });
         console.error("Error al actualizar usuario:", error);
-        alert("Error al actualizar usuario: " + error.message);
       }
     );
   } else {
@@ -183,13 +202,21 @@ guardarUsuario() {
     console.log("Creando nuevo usuario...");
     this.usuarioService.crearUsuario(this.usuario).subscribe(
       response => {
-        console.log("Usuario creado correctamente:", response);
+        Swal.fire({
+          icon: 'success',
+          title: 'Usuario creado',
+          text: 'El nuevo usuario ha sido registrado exitosamente.'
+        });
         this.cargarUsuarios();
         this.cerrarModal();
       },
       error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al crear',
+          text: 'No se pudo registrar el usuario.'
+        });
         console.error("Error al crear usuario:", error);
-        alert("Error al crear usuario: " + error.message);
       }
     );
   }
@@ -225,24 +252,32 @@ guardarUsuario() {
     });
   }
   // Mostrar/ocultar el menú de filtros
-  toggleFiltro() {
-    this.filtroVisible = !this.filtroVisible;
-  }
 
   deleteUsuario(id: string): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-      this.usuarioService.deleteUsuario(id).subscribe({
-        next: () => {
-          alert('Usuario eliminado correctamente');
-          this.cargarUsuarios(); // Recargar lista
-        },
-        error: err => {
-          console.error('Error al eliminar usuario:', err);
-          alert('Ocurrió un error al eliminar el usuario');
-        }
-      });
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡Esta acción eliminará el usuario permanentemente!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.usuarioService.deleteUsuario(id).subscribe({
+          next: () => {
+            this.cargarUsuarios(); // Refrescar lista
+            Swal.fire('Eliminado', 'El usuario fue eliminado con éxito.', 'success');
+          },
+          error: () => {
+            Swal.fire('Error', 'Ocurrió un error al eliminar el usuario.', 'error');
+          }
+        });
+      }
+    });
   }
+  
   
 
    // ✏️ Editar usuario

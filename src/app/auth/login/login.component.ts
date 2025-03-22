@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FormsModule } from '@angular/forms'; 
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -21,19 +22,35 @@ export class LoginComponent {
       usuId: this.usuario,
       usuContraseña: this.contrasena
     };
-
+  
     this.authService.login(credenciales).subscribe(
       response => {
         if (response.token) {
-          this.authService.setToken(response.token); // ✅ Guardar token en memoria
-          this.router.navigate(['/principal']); // ✅ Redirigir al dashboard
+          this.authService.setToken(response.token); // ✅ Guardar token
+          Swal.fire({
+            icon: 'success',
+            title: '¡Bienvenido!',
+            text: 'Inicio de sesión exitoso',
+            timer: 1500,
+            showConfirmButton: false
+          });
+          this.router.navigate(['/principal']);
         } else {
-          alert('Usuario o contraseña incorrectos');
+          Swal.fire({
+            icon: 'error',
+            title: 'Credenciales incorrectas',
+            text: 'Usuario o contraseña inválidos'
+          });
         }
       },
       error => {
-        alert('Error en el login. Verifica tus credenciales.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Credenciales incorrectas',
+          text: 'Usuario o contraseña inválidos'
+        });
       }
     );
   }
+  
 }
