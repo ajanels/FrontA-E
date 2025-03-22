@@ -57,11 +57,17 @@ export class UsuariosComponent implements OnInit  {
   }
 
   cargarUsuarios() {
-    this.usuarioService.getUsuarios().subscribe(data => {
-      this.usuarios = data;
-      this.usuariosFiltrados = data; // ✅ Inicializar la lista filtrada con todos los usuarios
+    this.usuarioService.getUsuarios().subscribe({
+      next: data => {
+        this.usuarios = data;
+        this.usuariosFiltrados = data; // 👈 mostrar todos al inicio
+      },
+      error: err => {
+        console.error('Error al cargar usuarios', err);
+      }
     });
   }
+  
   
 
   cargarRoles(): void {
@@ -83,11 +89,12 @@ export class UsuariosComponent implements OnInit  {
     this.modalAbierto = true;
     this.editando = editando;
   
-    if (editando && usuarioExistente && typeof usuarioExistente === 'object') {
-      this.usuario = { ...usuarioExistente };  // Clon seguro del usuario existente
+    if (editando && usuarioExistente) {
+      console.log("🧩 Usuario a editar:", usuarioExistente); // 👈 Verifica si trae el usuId
+      this.usuario = { ...usuarioExistente }; // Copiar datos del usuario
     } else {
       this.usuario = {
-        usuId: '', // <-- Puede causar problemas si la API espera un valor generado automáticamente
+        usuId: '', // ⚠️ IMPORTANTE: El ID solo debe llenarse en edición, no en creación
         usuPNombre: '',
         usuPApellido: '',
         usuCui: '',
@@ -107,21 +114,34 @@ export class UsuariosComponent implements OnInit  {
   }
   
   
+  
   crearUsuario() {
     if (!this.usuario.usuPNombre || !this.usuario.usuPApellido || !this.usuario.usuEmail) {
         alert("Todos los campos obligatorios deben llenarse.");
         return;
     }
 
+    const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!correoValido.test(this.usuario.usuEmail)) {
+      alert("El correo electrónico no es válido.");
+      return;
+    }
+
+// ✅ Validación de rol seleccionado
+if (!this.usuario.rolId || this.usuario.rolId <= 0) {
+  alert("Debe seleccionar un rol.");
+  return;
+}
+
     // ✅ Ajustar formato de fechas antes de enviar al backend
-    this.usuario.usuFecNacimiento = this.usuario.usuFecNacimiento.split('T')[0]; 
-    this.usuario.usuFecIngreso = this.usuario.usuFecIngreso.split('T')[0];
+    this.usuario.usuFecNacimiento = this.usuario.usuFecNacimiento.split('T')[0];
+this.usuario.usuFecIngreso = this.usuario.usuFecIngreso.split('T')[0];
 
     // ✅ Convertir usuGenero y usuEstado a valores correctos
-    this.usuario.usuGenero = this.usuario.usuGenero.charAt(0);  // "Masculino" -> "M"
-    this.usuario.usuEstado = this.usuario.usuEstado.charAt(0);  // "Activo" -> "A"
-
-    console.log("Datos enviados:", this.usuario); // 👀 Verificar en consola
+    this.usuario.usuGenero = this.usuario.usuGenero.charAt(0); // "Masculino" -> "M"
+    this.usuario.usuEstado = this.usuario.usuEstado.charAt(0); // "Activo" -> "A"
+    
+    console.log("Datos enviados:", JSON.stringify(this.usuario, null, 2));
 
     this.usuarioService.crearUsuario(this.usuario).subscribe({
         next: (response) => {
@@ -137,9 +157,46 @@ export class UsuariosComponent implements OnInit  {
 }
 
 
-  
-  
-  
+editarUsuario(usuario: any) {
+  this.modalAbierto = true;
+  this.editando = true;
+  this.usuario = { ...usuario }; // Copia segura del usuario para edición
+}
+
+guardarUsuario() {
+  if (this.editando) {
+    // Si estamos editando, se usa PUT con el ID del usuario
+    console.log("Editando usuario con ID:", this.usuario.usuId);
+    this.usuarioService.updateUsuario(this.usuario.usuId, this.usuario).subscribe(
+      response => {
+        console.log("Usuario actualizado correctamente:", response);
+        this.cargarUsuarios();
+        this.cerrarModal();
+      },
+      error => {
+        console.error("Error al actualizar usuario:", error);
+        alert("Error al actualizar usuario: " + error.message);
+      }
+    );
+  } else {
+    // Si estamos creando, se usa POST y el backend asignará el ID
+    console.log("Creando nuevo usuario...");
+    this.usuarioService.crearUsuario(this.usuario).subscribe(
+      response => {
+        console.log("Usuario creado correctamente:", response);
+        this.cargarUsuarios();
+        this.cerrarModal();
+      },
+      error => {
+        console.error("Error al crear usuario:", error);
+        alert("Error al crear usuario: " + error.message);
+      }
+    );
+  }
+}
+
+
+
   
   ajustarFormatoFecha(campo: string) {
     if (this.usuario[campo]) {
@@ -149,70 +206,50 @@ export class UsuariosComponent implements OnInit  {
     }
   }
   
-  
-  
-  
-  
-  
- 
-  
-  
   cerrarModal() {
     this.modalAbierto = false;
-  }
-  editarUsuario(usuario: any) {
-    this.modalAbierto = true;
-    this.editando = true;
-    this.usuario = { ...usuario }; // Copiar los datos del usuario
+    this.usuario = {};
+    this.editando = false;
   }
 
+
   filtrarUsuarios() {
-    if (!this.searchTerm.trim()) { 
-      this.usuariosFiltrados = this.usuarios; // ✅ Si no hay búsqueda, muestra todos los usuarios
+    if (!this.searchTerm.trim()) {  
+      this.usuariosFiltrados = this.usuarios; // 🔹 Restaurar lista si no hay búsqueda
       return;
     }
   
     this.usuariosFiltrados = this.usuarios.filter(usuario => {
-      const valor = usuario[this.filtroSeleccionado]?.toString().toLowerCase() || '';
+      const valor = usuario[this.filtroSeleccionado]?.toLowerCase() || '';
       return valor.includes(this.searchTerm.toLowerCase());
     });
   }
-  
-
-  guardarUsuario() {
-    if (this.editando) {
-      this.usuarioService.updateUsuario(this.usuario.usuId, this.usuario).subscribe(() => {
-        this.cargarUsuarios();
-        this.cerrarModal();
-      });
-    } else {
-      this.usuarioService.crearUsuario(this.usuario).subscribe(() => {
-        this.cargarUsuarios();
-        this.cerrarModal();
-      });
-    }
-  }
-
-
-
   // Mostrar/ocultar el menú de filtros
   toggleFiltro() {
     this.filtroVisible = !this.filtroVisible;
   }
 
-   deleteUsuario(id: string): void {
-    if (confirm('¿Estás seguro de eliminar este usuario?')) {
-      this.usuarioService.deleteUsuario(id).subscribe(() => {
-        this.cargarUsuarios(); // Recargar la lista después de eliminar
+  deleteUsuario(id: string): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+      this.usuarioService.deleteUsuario(id).subscribe({
+        next: () => {
+          alert('Usuario eliminado correctamente');
+          this.cargarUsuarios(); // Recargar lista
+        },
+        error: err => {
+          console.error('Error al eliminar usuario:', err);
+          alert('Ocurrió un error al eliminar el usuario');
+        }
       });
     }
   }
+  
 
    // ✏️ Editar usuario
    editUsuario(usuario: any) {
-    console.log('Editar usuario:', usuario);
-  } 
-
+    this.abrirModal(true, usuario); // 🔹 Abre el modal en modo edición
+  }
+  
    // Métodos para abrir el modal de creación y edición
    
 

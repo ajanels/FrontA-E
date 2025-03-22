@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'https://localhost:7282/api/Usuarios'; // URL base para usuarios
+  private apiUrl = 'https://localhost:7282/api/Usuarios';
   private apiRolesUrl = 'https://localhost:7282/api/Roles';
   constructor(private http: HttpClient) {}
 
@@ -29,17 +29,16 @@ export class UsuarioService {
     return this.http.post<any>(`${this.apiUrl}`, usuario);
 }
 
+updateUsuario(id: string, usuario: any): Observable<any> {
+  return this.http.put<any>(`${this.apiUrl}/${id}`, usuario);
+}
 
-  
-
-  updateUsuario(id: string, usuario: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, usuario);
-  }
 
    // Eliminar un usuario
    deleteUsuario(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/Usuarios/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+  
 
 
 }
