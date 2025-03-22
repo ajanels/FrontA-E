@@ -7,7 +7,8 @@
         <div class="search-container">
             <input type="text" placeholder="Buscar usuario..." [(ngModel)]="searchTerm" (input)="filtrarUsuarios()">
             <!-- Botón de agregar usuario -->
-            <button (click)="abrirModal(false)">+</button>
+<!-- Mostrar botón solo si rol es 1 -->
+<button (click)="abrirModal(false)">+</button>
         </div>
 
         <!-- Tabla de usuarios -->
@@ -32,8 +33,8 @@
                     <td>{{ usuario.usuTelMovil }}</td>
                     <td>{{ usuario.usuEstado }}</td>
                     <td>
-                        <button class="edit-button" (click)="abrirModal(true, usuario)">✏️</button>
-                        <button class="delete-button" (click)="deleteUsuario(usuario.usuId)">🗑️</button>
+                      <button (click)="editUsuario(usuario)">✏️</button>
+                      <button (click)="deleteUsuario(usuario.usuId)">🗑️</button>
                     </td>
                 </tr>
             </tbody>
@@ -49,12 +50,12 @@
                     <div class="form-grid">
                   
                       <div *ngIf="!editando">
-                        <label for="usuId">ID de Usuario:</label>
+                        <label for="usuId">Usuario:</label>
                         <input type="text" id="usuId" [(ngModel)]="usuario.usuId" name="usuId" required>
                       </div>
                   
                       <div *ngIf="editando">
-                        <label for="usuId">ID de Usuario:</label>
+                        <label for="usuId">Usuario:</label>
                         <input type="text" id="usuId" [(ngModel)]="usuario.usuId" name="usuId" readonly>
                       </div>
                   

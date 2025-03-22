@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
-
+import { AuthService } from '../../auth/auth.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-usuarios',
@@ -19,10 +20,14 @@ import Swal from 'sweetalert2';
 
 export class UsuariosComponent implements OnInit  {
   usuarios: any[] = [];
+
   roles: any[] = [];
   modalAbierto: boolean = false;
   editando = false;
   intervalId: any;
+  rolIdActual: number | null = null;
+  rolId: number = 0;
+  rolUsuario: number = 0;
 
   usuario: any = {
     usuId: '',
@@ -50,19 +55,33 @@ export class UsuariosComponent implements OnInit  {
 
   constructor(
     private usuarioService: UsuarioService, 
-    private http: HttpClient // ✅ Inyectamos HttpClient aquí
+    private http: HttpClient,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.obtenerRolDesdeToken();
     this.cargarUsuarios();
     this.cargarRoles();
   
     // Actualizar la tabla cada 1 segundo
-    this.intervalId = setInterval(() => {
-      this.cargarUsuarios();
-    }, 1000);
+    //this.intervalId = setInterval(() => {
+      //this.cargarUsuarios();
+    //}, 1000);
   }
 
+  obtenerRolDesdeToken() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded: any = jwtDecode(token);
+      this.rolId = +decoded.rol; // asegúrate que el claim se llama "rol"
+      console.log("Rol actual:", this.rolId);
+    }
+  }
+  
+  
+  
+  
   ngOnDestroy(): void {
     if (this.intervalId) {
       clearInterval(this.intervalId);
@@ -285,7 +304,7 @@ guardarUsuario() {
     this.abrirModal(true, usuario); // 🔹 Abre el modal en modo edición
   }
   
-   // Métodos para abrir el modal de creación y edición
-   
+   //obtener rol para log
 
+   
 }

@@ -26,7 +26,7 @@ export class LoginComponent {
     this.authService.login(credenciales).subscribe(
       response => {
         if (response.token) {
-          this.authService.setToken(response.token); // ✅ Guardar token
+          this.authService.setToken(response.token); // Guardar token
           Swal.fire({
             icon: 'success',
             title: '¡Bienvenido!',
