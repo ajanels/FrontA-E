@@ -1,0 +1,153 @@
+<app-sidebar></app-sidebar>
+<div class="content">
+    <div class="usuarios-container">
+        <h2>Usuarios</h2>
+
+        <!-- Barra de búsqueda y filtro -->
+        <div class="search-container">
+            <input type="text" placeholder="Buscar usuario..." [(ngModel)]="searchTerm" (input)="filtrarUsuarios()">
+            <!-- Botón de agregar usuario -->
+<!-- Mostrar botón solo si rol es 1 -->
+<button (click)="abrirModal(false)">+</button>
+        </div>
+
+        <!-- Tabla de usuarios -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Teléfono</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let usuario of usuariosFiltrados">
+                    <td>{{ usuario.usuPNombre }}</td>
+                    <td>{{ usuario.usuPApellido }}</td>
+                    <td>{{ usuario.usuEmail }}</td>
+                    <td>{{ usuario.usuPuesto }}</td>
+                    <td>{{ usuario.usuTelMovil }}</td>
+                    <td>{{ usuario.usuEstado }}</td>
+                    <td>
+                      <button (click)="editUsuario(usuario)">✏️</button>
+                      <button (click)="deleteUsuario(usuario.usuId)">🗑️</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Modal -->
+        <div class="modal" [class.show]="modalAbierto">
+            <div class="modal-content">
+                <h2>
+                    {{ editando ? 'EDITAR USUARIO' : 'CREAR USUARIO' }}
+                  </h2>
+                  <form (ngSubmit)="guardarUsuario()">
+                    <div class="form-grid">
+                  
+                      <div *ngIf="!editando">
+                        <label for="usuId">Usuario:</label>
+                        <input type="text" id="usuId" [(ngModel)]="usuario.usuId" name="usuId" required>
+                      </div>
+                  
+                      <div *ngIf="editando">
+                        <label for="usuId">Usuario:</label>
+                        <input type="text" id="usuId" [(ngModel)]="usuario.usuId" name="usuId" readonly>
+                      </div>
+                  
+                      <div>
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" [(ngModel)]="usuario.usuPNombre" name="usuPNombre" required>
+                      </div>
+                  
+                      <div>
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" id="apellido" [(ngModel)]="usuario.usuPApellido" name="usuPApellido" required>
+                      </div>
+                  
+                      <div>
+                        <label for="cui">CUI:</label>
+                        <input type="text" id="cui" [(ngModel)]="usuario.usuCui" name="usuCui" required>
+                      </div>
+                  
+                      <div>
+                        <label for="nit">NIT:</label>
+                        <input type="text" id="nit" [(ngModel)]="usuario.usuNit" name="usuNit">
+                      </div>
+                  
+                      <div>
+                        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                        <input type="date" id="fechaNacimiento" [(ngModel)]="usuario.usuFecNacimiento" name="usuFecNacimiento" required>
+                      </div>
+                  
+                      <div>
+                        <label for="fechaIngreso">Fecha de Ingreso:</label>
+                        <input type="date" id="fechaIngreso" [(ngModel)]="usuario.usuFecIngreso" name="usuFecIngreso" required>
+                      </div>
+                  
+                      <div>
+                        <label for="direccion">Dirección:</label>
+                        <input type="text" id="direccion" [(ngModel)]="usuario.usuDireccion" name="usuDireccion" required>
+                      </div>
+                  
+                      <div>
+                        <label for="telefono">Teléfono Móvil:</label>
+                        <input type="text" id="telefono" [(ngModel)]="usuario.usuTelMovil" name="usuTelMovil" required>
+                      </div>
+                  
+                      <div>
+                        <label for="genero">Género:</label>
+                        <select id="genero" [(ngModel)]="usuario.usuGenero" name="usuGenero" required>
+                          <option value="M">Masculino</option>
+                          <option value="F">Femenino</option>
+                        </select>
+                      </div>
+                  
+                      <div>
+                        <label for="estado">Estado:</label>
+                        <select id="estado" [(ngModel)]="usuario.usuEstado" name="usuEstado" required>
+                          <option value="A">Activo</option>
+                          <option value="I">Inactivo</option>
+                        </select>
+                      </div>
+                  
+                      <div>
+                        <label for="puesto">Puesto:</label>
+                        <input type="text" id="puesto" [(ngModel)]="usuario.usuPuesto" name="usuPuesto" required>
+                      </div>
+                  
+                      <div>
+                        <label for="rol">Rol:</label>
+                        <select id="rol" [(ngModel)]="usuario.rolId" name="rolId" required>
+                          <option *ngFor="let rol of roles" [value]="rol.rolId">{{ rol.rolNombre }}</option>
+                        </select>
+                      </div>
+                  
+                      <div>
+                        <label for="contraseña">Contraseña:</label>
+                        <input type="password" id="contraseña" [(ngModel)]="usuario.usuContrasena" name="usuContraseña" required>
+                      </div>
+                  
+                      <div>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" [(ngModel)]="usuario.usuEmail" name="usuEmail" required>
+                      </div>
+                  
+                    </div>
+                  
+                    <!-- Botones fuera del grid -->
+                    <div class="modal-buttons">
+                      <button type="submit">{{ editando ? 'Actualizar' : 'Crear' }}</button>
+                      <button type="button" (click)="cerrarModal()">Cancelar</button>
+                    </div>
+                  </form>
+                  
+            </div>
+        </div>
+
+    </div>
+</div>

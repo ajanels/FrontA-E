@@ -1,35 +1,8 @@
-<div class="main-container">
-    <!-- Sidebar -->
-    <div class="sidebar" [class.expanded]="menuExpandido">
-      <button class="toggle-btn" (click)="toggleMenu()">☰</button>
-      <ul>
-        <li [class.active]="moduloActivo === 'ventas'" (click)="navegar('ventas')">
-          <i class="fas fa-shopping-cart"></i> <span *ngIf="menuExpandido">Ventas</span>
-        </li>
-        <li [class.active]="moduloActivo === 'inventario'" (click)="navegar('inventario')">
-          <i class="fas fa-boxes"></i> <span *ngIf="menuExpandido">Inventario</span>
-        </li>
-        <li [class.active]="moduloActivo === 'usuarios'" (click)="navegar('usuarios')">
-          <i class="fas fa-users"></i> <span *ngIf="menuExpandido">Usuarios</span>
-        </li>
-        <li [class.active]="moduloActivo === 'proveedores'" (click)="navegar('proveedores')">
-          <i class="fas fa-truck"></i> <span *ngIf="menuExpandido">Proveedores</span>
-        </li>
-        <li [class.active]="moduloActivo === 'reportes'" (click)="navegar('reportes')">
-          <i class="fas fa-chart-bar"></i> <span *ngIf="menuExpandido">Reportes</span>
-        </li>
-        <li [class.active]="moduloActivo === 'mantenimiento'" (click)="navegar('mantenimiento')">
-          <i class="fas fa-tools"></i> <span *ngIf="menuExpandido">Mantenimiento</span>
-        </li>
-        <li><button class="logout-btn" (click)="logout()">Cerrar Sesión</button>
-        </li>
-      </ul>
-    </div>
-  
-    <!-- Contenido Principal -->
-    <div class="content">
-      <h1>A&E LIBRERÍA</h1>
-      <p>Bienvenido al sistema de gestión</p>
-    </div>
+<div class="container">
+  <app-sidebar></app-sidebar>
+  <div class="content">
+    <h1>Bienvenido a la Librería A&E</h1>
+    <p>Selecciona una opción del menú lateral.</p>
+    <router-outlet></router-outlet>
   </div>
-  
+</div>

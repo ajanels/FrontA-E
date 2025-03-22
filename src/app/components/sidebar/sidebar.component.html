@@ -1,0 +1,47 @@
+<div class="sidebar" [class.collapsed]="!menuExpandido">
+  <!-- Botón de Expandir/Contraer -->
+  <button class="toggle-btn" (click)="toggleMenu()">☰</button>
+
+  <ul>
+    <li [class.active]="isActive('/principal')">
+      <a routerLink="/principal">
+        <i class="fas fa-home"></i> <span *ngIf="menuExpandido">Inicio</span>
+      </a>
+    </li>
+    <li [class.active]="isActive('/ventas')">
+      <a routerLink="/ventas">
+        <i class="fas fa-shopping-cart"></i> <span *ngIf="menuExpandido">Ventas</span>
+      </a>
+    </li>
+    <li [class.active]="isActive('/inventario')">
+      <a routerLink="/inventario">
+        <i class="fas fa-boxes"></i> <span *ngIf="menuExpandido">Inventario</span>
+      </a>
+    </li>
+    <li [class.active]="isActive('/usuarios')">
+      <a routerLink="/usuarios">
+        <i class="fas fa-users"></i> <span *ngIf="menuExpandido">Usuarios</span>
+      </a>
+    </li>
+    <li [class.active]="isActive('/proveedores')">
+      <a routerLink="/proveedores">
+        <i class="fas fa-truck"></i> <span *ngIf="menuExpandido">Proveedores</span>
+      </a>
+    </li>
+    <li [class.active]="isActive('/reportes')">
+      <a routerLink="/reportes">
+        <i class="fas fa-chart-bar"></i> <span *ngIf="menuExpandido">Reportes</span>
+      </a>
+    </li>
+    <li [class.active]="isActive('/mantenimiento')">
+      <a routerLink="/mantenimiento">
+        <i class="fas fa-tools"></i> <span *ngIf="menuExpandido">Mantenimiento</span>
+      </a>
+    </li>
+    <li>
+      <a (click)="logout()" class="logout">
+        <i class="fas fa-sign-out-alt"></i> <span *ngIf="menuExpandido">Cerrar Sesión</span>
+      </a>
+    </li>
+  </ul>
+</div>

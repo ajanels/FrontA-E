@@ -1,0 +1,10 @@
+.content {
+    margin-left: 250px; /* Deja espacio para el sidebar expandido */
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+  }
+  
+  .sidebar.collapsed + .content {
+    margin-left: 60px; /* Ajuste cuando el sidebar está contraído */
+  }
+  
