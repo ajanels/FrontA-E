@@ -1,0 +1,62 @@
+/* Header fijo */
+.top-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #333;
+    padding: 0 1rem;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .logo {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+  }
+  
+  
+  .app-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  /* Contenedor principal debajo del header */
+  .main-container {
+    display: flex;
+    margin-top: 80px; /* Deja espacio para el header fijo */
+    height: calc(100vh - 80px);
+    width: 100%;
+  }
+  
+  /* Ajuste de contenido según el ancho del sidebar */
+  .content {
+    flex: 1;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+    margin-left: 250px; /* Ancho del sidebar expandido */
+  }
+  
+  .main-container.sidebar-collapsed .content {
+    margin-left: 60px; /* Ancho del sidebar colapsado */
+  }
+  

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UsuarioService } from '../../services/usuario.service';
@@ -13,7 +12,7 @@ import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [HttpClientModule,CommonModule,FormsModule,SidebarComponent,RouterModule],
+  imports: [HttpClientModule,CommonModule,FormsModule,RouterModule],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css'
 })

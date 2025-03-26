@@ -1,7 +1,8 @@
-<div class="container">
-  <app-sidebar></app-sidebar>
+
+<!-- CONTENIDO PRINCIPAL -->
+<div class="main-container" [class.sidebar-collapsed]="!sidebarExpandido">
   <div class="content">
-    <h1>Bienvenido a la Librería A&E</h1>
+    <h2>Bienvenido a la Librería AE</h2>
     <p>Selecciona una opción del menú lateral.</p>
     <router-outlet></router-outlet>
   </div>

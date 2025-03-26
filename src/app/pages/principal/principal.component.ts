@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common'; 
-import { AuthService } from '../../auth/auth.service';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
   styleUrls: ['./principal.component.css'],
   standalone: true,
-  imports: [CommonModule,RouterModule,SidebarComponent]
+  imports: [CommonModule, RouterModule]
 })
-export class PrincipalComponent {}
+export class PrincipalComponent {
+  // Indica si el sidebar está expandido o no
+  sidebarExpandido: boolean = true;
+
+  onSidebarChange(expandido: boolean) {
+    this.sidebarExpandido = expandido;
+  }
+}

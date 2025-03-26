@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -8,38 +8,41 @@ import { CommonModule } from '@angular/common';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterModule], // ❌ Aquí falta el `standalone: true`
-
+  imports: [CommonModule, RouterModule],
 })
-export class SidebarComponent {
-  menuExpandido = true; // El menú inicia expandido
-  moduloActivo = 'principal';
+export class SidebarComponent implements OnInit {
+  menuExpandido = true;
+  @Output() estadoSidebar = new EventEmitter<boolean>();
+  
+  // Declaramos la propiedad userName para mostrar el nombre del usuario en el header
+  userName: string = 'Usuario';
 
   constructor(private router: Router) {}
-    // ✅ Recuperar el estado del sidebar al iniciar
 
-   
-    ngOnInit() {
-      this.menuExpandido = localStorage.getItem('sidebarState') !== 'collapsed';
+  ngOnInit() {
+    // Leer estado guardado en localStorage
+    const storedState = localStorage.getItem('sidebarState');
+    if (storedState) {
+      this.menuExpandido = storedState === 'expanded';
+    } else {
+      this.menuExpandido = true;
     }
+    // Emitir el estado inicial al componente padre
+    this.estadoSidebar.emit(this.menuExpandido);
+  }
 
-      toggleMenu() {
+  toggleMenu() {
     this.menuExpandido = !this.menuExpandido;
     localStorage.setItem('sidebarState', this.menuExpandido ? 'expanded' : 'collapsed');
+    this.estadoSidebar.emit(this.menuExpandido);
   }
+
   isActive(route: string): boolean {
     return this.router.url === route;
   }
 
-    navigate(modulo: string) {
-      this.moduloActivo = modulo;
-      this.router.navigate([modulo]);
-    }
-
-  
-
   logout() {
-    localStorage.removeItem('token'); // ✅ Eliminar el token de sesión
-    this.router.navigate(['/login']); // ✅ Redirigir al login
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }

@@ -1,0 +1,24 @@
+<!-- HEADER FIJO EN LA PARTE SUPERIOR -->
+<div class="top-header">
+    <div class="header-left">
+        <img class="logo" src="assets/images/logo.png" alt="Logo A&E" />
+        <h1 class="app-title">A&E LIBRERÍA</h1>
+    </div>
+    <div class="header-right">
+      <span class="user-name">DUIV</span>
+      <!-- Aquí podrías poner un ícono de usuario o un botón de logout -->
+    </div>
+  </div>
+  
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div class="main-container" [class.sidebar-collapsed]="!sidebarExpandido">
+    <!-- SIDEBAR a la izquierda -->
+    <app-sidebar (estadoSidebar)="onSidebarChange($event)"></app-sidebar>
+  
+    <!-- CONTENIDO a la derecha -->
+    <div class="content">
+      <!-- Aquí se inyectarán las rutas hijas -->
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  

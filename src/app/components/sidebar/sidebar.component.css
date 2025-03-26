@@ -1,87 +1,86 @@
 .sidebar {
-    width: 250px; /* Tamaño cuando está expandido */
-    background: #1e3a8a; /* Azul oscuro */
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-    transition: width 0.3s ease;
-    overflow-x: hidden;
-    padding-top: 10px;
-  }
-  
-  .sidebar.collapsed {
-    width: 60px; /* Tamaño cuando está contraído */
-  }
-  
-  .toggle-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
-    position: relative; /* Para que esté dentro del sidebar */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-  
-  .toggle-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-  
-  .menu-items {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .menu-items li {
-    padding: 15px;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .menu-items li:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
-  
-  .menu-items li.active {
-    background: #2563eb; /* Azul más brillante */
-    font-weight: bold;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  li {
-    padding: 10px;
-    transition: background 0.3s;
-  }
-  
-  li.active {
-    background-color: #1d4ed8; /* Azul más oscuro */
-    font-weight: bold;
-  }
-  
-  li a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: white;
-    padding: 10px;
-  }
-  
-  li a i {
-    margin-right: 10px;
-  }
-  
+  position: fixed;        /* Fija el sidebar en la pantalla */
+  top: 60px;              /* Ubicado justo debajo del header (que tiene 60px de alto) */
+  left: 0;
+  bottom: 0;              /* Ocupa todo el alto restante */
+  width: 250px;           /* Ancho cuando está expandido */
+  background: #1e3a8a;     /* Azul oscuro */
+  transition: width 0.3s ease;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  margin-top: 20px;
+}
+
+.sidebar.collapsed {
+  width: 60px;            /* Ancho cuando está colapsado */
+}
+
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 10px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.user-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+li.active {
+  background-color: #2563eb;
+  font-weight: bold;
+}
+
+li:hover {
+  background-color: #3b82f6;
+}
+
+li a {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  width: 100%;
+}
+
+li a i {
+  margin-right: 10px;
+}
+

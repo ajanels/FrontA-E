@@ -1,29 +1,11 @@
-.container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  /* Ajusta el contenido para que se mueva con el sidebar */
-  .content {
-    flex-grow: 1;
-    padding: 20px;
-    margin-left: 250px; /* Mismo ancho del sidebar */
-    transition: margin-left 0.3s ease-in-out;
-  }
-  
-  /* Si el sidebar está contraído, el contenido se ajusta */
-  .sidebar:not(.expanded) + .content {
-    margin-left: 80px;
-  }
 
   /* Estilos generales */
 .usuarios-container {
-    background: white;
-    padding: 20px;
+    background: rgb(241, 236, 236);
+    padding: 10px;
     border-radius: 10px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-    max-width: 95%;
-    margin: auto;
+    max-width: 100%;
 }
 
 /* Estilo del título */
@@ -126,7 +108,7 @@ td button {
 
 /* Botón editar */
 td button:nth-child(1) {
-    color: #2d89ef;
+    color: #1456a2;
 }
 
 /* Botón eliminar */
@@ -134,12 +116,6 @@ td button:nth-child(2) {
     color: #ff0000;
 }
 
-/* Estilo del contenedor principal */
-.content {
-    padding: 20px;
-    margin-left: 220px; /* Espacio para el sidebar */
-    transition: margin-left 0.3s;
-}
 
 .expanded {
     margin-left: 60px; /* Ajusta cuando el sidebar se colapsa */
