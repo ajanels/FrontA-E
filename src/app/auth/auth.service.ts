@@ -12,10 +12,13 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(credenciales: any): Observable<any> {
-    return this.http.post(this.apiUrl, credenciales);
-  }
+  // login(credenciales: any): Observable<any> {
+  //   return this.http.post(this.apiUrl, credenciales);
+  // }
   
+  login(credenciales: any): Observable<any> {
+  return this.http.post(this.apiUrl, credenciales);
+}
 
   getRolId(): number | null {
     const token = this.getToken();
@@ -29,6 +32,7 @@ export class AuthService {
       return null;
     }
   }
+  
   setToken(token: string) {
     this.token = token; // Guardar token en memoria
   }

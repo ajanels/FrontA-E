@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { FormsModule } from '@angular/forms'; 
 import Swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,11 +18,49 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  // login() {
+  //   const credenciales = {
+  //     usuId: this.usuario,
+  //     usuContraseña: this.contrasena
+  //   };
+  
+  //   this.authService.login(credenciales).subscribe(
+  //     response => {
+  //       if (response.token) {
+  //         this.authService.setToken(response.token); // Guardar token
+  //         Swal.fire({
+  //           icon: 'success',
+  //           title: '¡Bienvenido!',
+  //           text: 'Inicio de sesión exitoso',
+  //           timer: 1500,
+  //           showConfirmButton: false
+  //         });
+  //         this.router.navigate(['/principal']);
+  //       } else {
+  //         Swal.fire({
+  //           icon: 'error',
+  //           title: 'Credenciales incorrectas',
+  //           text: 'Usuario o contraseña inválidos'
+  //         });
+  //       }
+  //     },
+  //     error => {
+  //       Swal.fire({
+  //         icon: 'error',
+  //         title: 'Credenciales incorrectas',
+  //         text: 'Usuario o contraseña inválidos'
+  //       });
+  //     }
+  //   );
+  // }
+
   login() {
     const credenciales = {
       usuId: this.usuario,
       usuContraseña: this.contrasena
     };
+  
+    // console.log('Credenciales enviadas:', credenciales);
   
     this.authService.login(credenciales).subscribe(
       response => {
@@ -44,6 +83,7 @@ export class LoginComponent {
         }
       },
       error => {
+        console.error('Error al iniciar sesión:', error);
         Swal.fire({
           icon: 'error',
           title: 'Credenciales incorrectas',
@@ -52,5 +92,4 @@ export class LoginComponent {
       }
     );
   }
-  
 }

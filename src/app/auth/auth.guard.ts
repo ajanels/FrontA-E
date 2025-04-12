@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {
     if (this.authService.isAuthenticated()) {
-      console.log("✅ Usuario autenticado, acceso permitido.");
+      // console.log("✅ Usuario autenticado, acceso permitido.");
       return true;
     } else {
       console.log("❌ No hay sesión activa, redirigiendo a /login.");

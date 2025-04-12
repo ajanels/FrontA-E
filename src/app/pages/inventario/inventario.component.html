@@ -1,4 +1,196 @@
 <div class="content">
-  <h1>{{ titulo }}</h1>
-  <p>Contenido del módulo {{ titulo }}</p>
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="Buscar productos..."
+      [(ngModel)]="busqueda"
+      (input)="buscarProductos()"
+    />
+    <button (click)="abrirModalCrear()" class="btn">Crear</button>
+  </div>
+
+  <div class="filter-bar">
+    <label for="categoria">Filtrar por categoría:</label>
+    <select [(ngModel)]="categoriaSeleccionada" (change)="aplicarFiltros()">
+      <option [ngValue]="null">Todas las categorías</option>
+      <option *ngFor="let cat of categorias" [ngValue]="cat.id">
+        {{ cat.nombre }}
+      </option>
+    </select>
+    <button
+      (click)="abrirModalCategorias()"
+      class="btn btn-secondary"
+      style="margin-left: 1rem"
+    >
+      Gestionar categorías
+    </button>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Imagen</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Stock</th>
+        <th>Categoría</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of productosFiltrados">
+        <td>
+          <img [src]="producto.imagen" alt="{{ producto.nombre }}" width="50" />
+        </td>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.descripcion }}</td>
+        <td>{{ producto.stock }}</td>
+        <td>{{ getNombreCategoria(producto.catProductoId) }}</td>
+        <td>
+          <button (click)="abrirModalEditar(producto)" class="btn">✏️</button>
+          <button (click)="eliminarProducto(producto.id)" class="btn">
+            🗑️
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="productosFiltrados.length === 0">
+        <td colspan="6" style="text-align: center; color: #888">
+          No existen productos para esta categoría
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div *ngIf="mostrarModal" class="modal show">
+    <div class="modal-dialog">
+      <h2>
+        {{ productoSeleccionado ? "Editar Producto" : "Nuevo Producto" }}
+      </h2>
+      <form (ngSubmit)="guardarProducto()" #formProducto="ngForm" novalidate>
+        <!-- Campo Nombre -->
+        <input
+          type="text"
+          name="productoNombre"
+          [(ngModel)]="modeloProducto.productoNombre"
+          placeholder="Nombre"
+          required
+        />
+
+        <!-- Campo Descripción -->
+        <textarea
+          name="productoDescripcion"
+          [(ngModel)]="modeloProducto.productoDescripcion"
+          placeholder="Descripción"
+          required
+        ></textarea>
+
+        <!-- Campo Precio -->
+        <input
+          type="number"
+          name="productoPrecio"
+          [(ngModel)]="modeloProducto.productoPrecio"
+          placeholder="Precio"
+          required
+        />
+
+        <!-- Campo Stock -->
+        <input
+          type="number"
+          name="productoStock"
+          [(ngModel)]="modeloProducto.productoStock"
+          placeholder="Stock"
+          required
+        />
+
+        <!-- Campo Categoría -->
+        <label for="categoria">Categoría:</label>
+        <select
+          id="categoria"
+          name="catProductoId"
+          [(ngModel)]="modeloProducto.catProductoId"
+          required
+        >
+          <option *ngFor="let categoria of categorias" [value]="categoria.id">
+            {{ categoria.nombre }}
+          </option>
+        </select>
+
+        <!-- Campo Imagen -->
+        <label for="imagen">Imagen:</label>
+        <input type="file" id="imagen" (change)="manejarImagen($event)" />
+
+        <!-- Botones -->
+        <button type="submit" class="btn btn-primary">
+          {{ productoSeleccionado ? "Actualizar" : "Crear" }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cerrarModal()">
+          Cancelar
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- Modal Categorías -->
+  <div *ngIf="mostrarModalCategoria" class="modal show">
+    <div class="modal-categorias-dialog">
+      <h2>Gestión de Categorías</h2>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cat of categorias">
+            <td>{{ cat.nombre }}</td>
+            <td>{{ cat.descripcion }}</td>
+            <td>
+              <button class="btn" (click)="editarCategoria(cat)">✏️</button>
+              <button class="btn" (click)="eliminarCategoria(cat.id)">
+                🗑️
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="categorias.length === 0">
+            <td colspan="3" style="text-align: center; color: #888">
+              No hay categorías disponibles
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>
+        {{ categoriaSeleccionadaParaCRUD?.id ? "Editar" : "Nueva" }} Categoría
+      </h3>
+      <form (ngSubmit)="guardarCategoria()">
+        <input
+          type="text"
+          [(ngModel)]="categoriaSeleccionadaParaCRUD.nombre"
+          name="nombre"
+          placeholder="Nombre"
+          required
+        />
+        <input
+          type="text"
+          [(ngModel)]="categoriaSeleccionadaParaCRUD.descripcion"
+          name="descripcion"
+          placeholder="Descripción"
+          required
+        />
+        <div class="form-buttons">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+
+      <div style="text-align: right; margin-top: 10px">
+        <button class="btn btn-secondary" (click)="cerrarModalCategorias()">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal Categoria -->
 </div>

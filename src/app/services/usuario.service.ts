@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,14 +26,36 @@ export class UsuarioService {
   }
 
   // Crear un nuevo usuario
-  crearUsuario(usuario: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, usuario);
+//   crearUsuario(usuario: any): Observable<any> {
+//     return this.http.post<any>(`${this.apiUrl}`, usuario);
+// }
+crearUsuario(usuario: any): Observable<any> {
+  // Cifrar la contraseña antes de enviarla al backend
+  const salt = bcrypt.genSaltSync(10); // Genera un salt
+  usuario.usuContrasena = bcrypt.hashSync(usuario.usuContrasena, salt); // Cifra la contraseña
+
+  // Enviar el usuario al backend
+  return this.http.post<any>(`${this.apiUrl}`, usuario);
 }
+
+// updateUsuario(id: string, usuario: any): Observable<any> {
+//   return this.http.put<any>(`${this.apiUrl}/${id}`, usuario);
+// }
 
 updateUsuario(id: string, usuario: any): Observable<any> {
+  // Verificar si el usuario ingresó una nueva contraseña
+  if (usuario.usuContrasena && usuario.usuContrasena.trim() !== '') {
+    // Cifrar la nueva contraseña antes de enviarla al backend
+    const salt = bcrypt.genSaltSync(10);
+    usuario.usuContrasena = bcrypt.hashSync(usuario.usuContrasena, salt);
+  } else {
+    // Si no se ingresó una nueva contraseña, no modificar el campo
+    delete usuario.usuContrasena;
+  }
+
+  // Enviar el usuario actualizado al backend
   return this.http.put<any>(`${this.apiUrl}/${id}`, usuario);
 }
-
 
    // Eliminar un usuario
    deleteUsuario(id: string): Observable<void> {

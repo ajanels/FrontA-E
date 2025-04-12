@@ -1,4 +1,36 @@
 <div class="content">
-  <h1>Página de Ventas</h1>
-  <p>Bienvenido a la sección de ventas.</p>
+  <h1>Productos y ventas</h1>
+  <p>Lista de ventas realizadas con los productos asociados.</p>
+
+  <div class="catalogo">
+    <div class="card" *ngFor="let venta of ventas">
+      <img [src]="venta.producto.productoImg" alt="{{ venta.producto.productoNombre }}">
+      <h2>{{ venta.producto.productoNombre }}</h2>
+      <p class="precio">Q.{{ venta.producto.productoPrecio }}</p>
+      <div class="acciones">
+        <button (click)="abrirModal(venta)">Detalles</button>
+        <button (click)="agregarAlCarrito(venta)">Agregar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="modalVisible">
+    <div class="modal-content">
+      <span class="close" (click)="cerrarModal()">&times;</span>
+      <img [src]="ventaSeleccionada?.producto.productoImg" alt="{{ ventaSeleccionada?.producto.productoNombre }}">
+      <h2>{{ ventaSeleccionada?.producto.productoNombre }}</h2>
+      <p><strong>Descripción:</strong> {{ ventaSeleccionada?.producto.productoDescripcion }}</p>
+      <p><strong>Stock:</strong> {{ ventaSeleccionada?.producto.productoStock }}</p>
+      <p><strong>Categoría:</strong> {{ ventaSeleccionada?.producto.categoriaProducto.catProductoNombre }}</p>
+      <p><strong>Fecha de Ingreso:</strong> {{ ventaSeleccionada?.producto.productoFecIngreso }}</p>
+      <p><strong>Fecha de Vencimiento:</strong> {{ ventaSeleccionada?.producto.productoFecVencimiento }}</p>
+      <p><strong>Precio: </strong> Q.{{ ventaSeleccionada?.producto.productoPrecio }}</p>
+      <p><strong>Cantidad: </strong>{{ ventaSeleccionada?.productoCantidad }}</p>
+      <div class="modal-actions">
+        <button (click)="cerrarModal()">Cerrar</button>
+        <button (click)="agregarAlCarrito(ventaSeleccionada)">Agregar al carrito</button>
+      </div>
+    </div>
+  </div>
 </div>
