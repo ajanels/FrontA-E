@@ -11,6 +11,7 @@ import { ProveedoresComponent } from './pages/proveedores/proveedores.component'
 import { ReportesComponent } from './pages/reportes/reportes.component';
 import { MantenimientoComponent } from './pages/mantenimiento/mantenimiento.component';
 
+
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -25,7 +26,7 @@ const routes: Routes = [
       { path: 'usuarios', component: UsuariosComponent },
       { path: 'proveedores', component: ProveedoresComponent },
       { path: 'reportes', component: ReportesComponent },
-      { path: 'mantenimiento', component: MantenimientoComponent },
+      { path: 'mantenimiento',  loadChildren: () => import('./pages/mantenimiento/mantenimiento.module').then(m => m.MantenimientoModule)},
       { path: '', redirectTo: 'principal', pathMatch: 'full' } // Redirige a principal
     ]
   }

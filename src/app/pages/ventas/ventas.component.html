@@ -1,36 +1,100 @@
-<div class="content">
-  <h1>Productos y ventas</h1>
-  <p>Lista de ventas realizadas con los productos asociados.</p>
+<div class="catalog-container">
+  <div *ngFor="let producto of productos">
+    <img
+      [src]="producto.productoImg"
+      alt="Imagen del producto"
+      class="product-image"
+    />
+    <h3 class="product-name">{{ producto.productoNombre }}</h3>
+    <p class="product-price">
+      Q.{{ producto.productoPrecio | number : "1.2-2" }}
+    </p>
+    <p
+      class="product-productoStock"
+      [ngClass]="{ agotado: producto.productoproductoStock === 0 }"
+    >
+      {{
+        producto.productoStock > 0
+          ? "Disponible: " + producto.productoStock
+          : "Agotado"
+      }}
+    </p>
+    <button
+      class="btn-vender"
+      [disabled]="producto.productoStock === 0"
+      (click)="agregarAlCarrito(producto, productoCantidad)"
+    >
+      Agregar al carrito
+    </button>
+  </div>
+  <!-- Botón de carrito flotante -->
+  <button class="btn-carrito" (click)="toggleSidebar()">
+    🛒({{ carritoVentas.length }})
+  </button>
 
-  <div class="catalogo">
-    <div class="card" *ngFor="let venta of ventas">
-      <img [src]="venta.producto.productoImg" alt="{{ venta.producto.productoNombre }}">
-      <h2>{{ venta.producto.productoNombre }}</h2>
-      <p class="precio">Q.{{ venta.producto.productoPrecio }}</p>
-      <div class="acciones">
-        <button (click)="abrirModal(venta)">Detalles</button>
-        <button (click)="agregarAlCarrito(venta)">Agregar</button>
+  <!-- Sidebar del carrito -->
+  <div class="sidebar-carrito" [class.abierto]="sidebarAbierto">
+    <h2>Carrito de Compras</h2>
+
+    <div *ngIf="carritoVentas.length === 0">
+      <p>El carrito está vacío.</p>
+    </div>
+
+    <div *ngFor="let item of carritoVentas; let i = index" class="carrito-item">
+      <img [src]="item.productoImg" alt="Imagen producto" class="carrito-img" />
+      <div class="carrito-detalles">
+        <h4>{{ item.productoNombre }}</h4>
+        <p>Precio unitario: Q{{ item.productoPrecio | number : "1.2-2" }}</p>
+        <input
+          type="number"
+          min="1"
+          [max]="obtenerStockDisponible(item.productoId)"
+          [(ngModel)]="item.productoCantidad"
+          (change)="recalcularTotal()"
+          class="input-cantidad"
+        />
+        <!-- Campo para agregar descripción individual -->
+        <textarea 
+          [(ngModel)]="item.descripcion" 
+          placeholder="Descripción del producto" 
+          class="input-descripcion">
+        </textarea>
+    
+        <p>
+          Subtotal: Q{{
+            item.productoCantidad * item.productoPrecio | number : "1.2-2"
+          }}
+        </p>
+        <button class="btn-eliminar" (click)="eliminarDelCarrito(i)">
+          Eliminar
+        </button>
       </div>
     </div>
-  </div>
+    
 
-  <!-- Modal -->
-  <div class="modal" *ngIf="modalVisible">
-    <div class="modal-content">
-      <span class="close" (click)="cerrarModal()">&times;</span>
-      <img [src]="ventaSeleccionada?.producto.productoImg" alt="{{ ventaSeleccionada?.producto.productoNombre }}">
-      <h2>{{ ventaSeleccionada?.producto.productoNombre }}</h2>
-      <p><strong>Descripción:</strong> {{ ventaSeleccionada?.producto.productoDescripcion }}</p>
-      <p><strong>Stock:</strong> {{ ventaSeleccionada?.producto.productoStock }}</p>
-      <p><strong>Categoría:</strong> {{ ventaSeleccionada?.producto.categoriaProducto.catProductoNombre }}</p>
-      <p><strong>Fecha de Ingreso:</strong> {{ ventaSeleccionada?.producto.productoFecIngreso }}</p>
-      <p><strong>Fecha de Vencimiento:</strong> {{ ventaSeleccionada?.producto.productoFecVencimiento }}</p>
-      <p><strong>Precio: </strong> Q.{{ ventaSeleccionada?.producto.productoPrecio }}</p>
-      <p><strong>Cantidad: </strong>{{ ventaSeleccionada?.productoCantidad }}</p>
-      <div class="modal-actions">
-        <button (click)="cerrarModal()">Cerrar</button>
-        <button (click)="agregarAlCarrito(ventaSeleccionada)">Agregar al carrito</button>
-      </div>
+    <!-- Select de usuario -->
+    <div class="select-usuario">
+      <label for="usuario">Seleccionar Usuario:</label>
+      <select
+        id="usuario"
+        [(ngModel)]="usuarioSeleccionado"
+        class="input-select"
+      >
+        <option
+          *ngFor="let usuario of usuarios"
+          [ngValue]="usuario.usuId"
+        >
+          {{ usuario.usuPNombre }}
+        </option>
+      </select>
+    </div>
+    
+    <div class="carrito-total">
+      <h3>Total: Q{{ totalCarrito | number : "1.2-2" }}</h3>
+      <button class="btn-confirmar" (click)="confirmarVenta()">
+        Confirmar Venta
+      </button>
+      <button class="btn-cerrar" (click)="toggleSidebar()">Cerrar</button>
     </div>
   </div>
 </div>

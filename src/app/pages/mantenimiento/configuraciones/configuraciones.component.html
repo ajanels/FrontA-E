@@ -1,0 +1,33 @@
+<div class="config-container">
+    <h2>Configuraciones de Roles</h2>
+  
+    <!-- Formulario para crear un nuevo rol -->
+    <div class="new-role-form">
+      <label for="rolNombre">Nombre del Rol:</label>
+      <input type="text" id="rolNombre" [(ngModel)]="newRole.rolNombre" placeholder="Ingresa el nombre del rol" required />
+      <button (click)="createRole()">Crear Rol</button>
+    </div>
+  
+    <h3>Lista de Roles</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Rol</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rol of roles">
+          <td>{{ rol.rolNombre }}</td>
+          <td>{{ rol.activo ? 'Activo' : 'Deshabilitado' }}</td>
+          <td>
+            <button (click)="toggleRoleState(rol)">
+              {{ rol.activo ? 'Deshabilitar' : 'Habilitar' }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

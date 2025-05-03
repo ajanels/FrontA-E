@@ -21,10 +21,14 @@ export class ProductosService {
   }
 
   // Actualizar un producto existente
-  updateProducto(id: number, producto: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, producto);
+  // updateProducto(id: number, producto: any): Observable<any> {
+  //   return this.http.put<any>(`${this.apiUrl}/${id}`, producto);
+  // }
+  updateProducto(producto: any) {
+    return this.http.put(`https://localhost:7282/api/productos/${producto.productoId}`, producto);
   }
-
+  
+  
   // Eliminar un producto
   deleteProducto(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);

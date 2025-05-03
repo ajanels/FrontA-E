@@ -140,11 +140,13 @@ export class UsuariosComponent implements OnInit {
   cargarRoles(): void {
     this.usuarioService.getRoles().subscribe(
       (data) => {
-        // console.log('Roles recibidos:', data); // Verifica si los datos son correctos
-        this.roles = data.map((rol: any) => ({
-          ...rol,
-          rolId: Number(rol.rolId), // Asegúrate de que sea un número
-        }));
+        // Primero filtramos los roles activos y luego convertimos rolId a número
+        this.roles = data
+          .filter((rol: any) => rol.activo === true)
+          .map((rol: any) => ({
+            ...rol,
+            rolId: Number(rol.rolId)
+          }));
       },
       (error) => {
         console.error('Error al cargar roles:', error);
