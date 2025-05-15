@@ -1,4 +1,126 @@
-<div class="content">
-  <h1>Página de Reportes</h1>
-  <p>Bienvenido a la sección de reportes.</p>
+<!-- <div class="report-container">
+ <h1>Reportes</h1>
+</div> -->
+
+<div class="report-container">
+  <h1>Reportes</h1>
+  <div class="charts-grid">
+    <div class="chart-item">
+      <h2>Resumen de Stock</h2>
+      <canvas
+        baseChart
+        [datasets]="barChartData.datasets"
+        [labels]="barChartData.labels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [plugins]="barChartPlugins"
+        [type]="barChartType"
+      >
+      </canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-item">
+        <h3>Disponibilidad de Productos</h3>
+        <canvas
+          #barChartDisponibilidad
+          baseChart
+          [data]="barChartDataDisponibilidad"
+          [type]="barChartTypeDisponibilidad"
+          [options]="barChartOptionsDisponibilidad"
+        >
+        </canvas>
+      </div>
+    </div>
+    <!-- <div class="chart-card">
+      <div class="chart-item">
+        <h3>Promedio de Stock por Categoría</h3>
+        <canvas
+          #barChartPromedio
+          baseChart
+          [data]="barChartDataPromedio"
+          [type]="barChartTypePromedio"
+          [options]="barChartOptionsPromedio"
+        ></canvas>
+      </div>
+    </div> -->
+    <div class="chart-card">
+      <div class="chart-item">
+        <h3>Top 5 productos con más stock</h3>
+        <canvas
+          #barChartTopProductos
+          baseChart
+          [data]="barChartDataTopProductos"
+          [type]="barChartTypeTopProductos"
+          [options]="barChartOptionsTopProductos"
+        ></canvas>
+      </div>
+    </div>
+    <!-- Ventas -->
+    <div class="chart-card">
+      <div class="chart-item">
+        <h2 class="text-lg font-semibold mb-2 text-center">Ventas por día</h2>
+        <canvas
+          baseChart
+          [data]="{
+            labels: ventasPorDiaLabels,
+            datasets: [{ data: ventasPorDiaData }]
+          }"
+          [options]="pieChartOptions"
+          [type]="'pie'"
+        >
+        </canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-item">
+        <h2 class="text-lg font-semibold mb-2 text-center">
+          Productos más vendidos
+        </h2>
+        <canvas
+          baseChart
+          [data]="{
+            labels: productosMasVendidosLabels,
+            datasets: [{ data: productosMasVendidosData }]
+          }"
+          [options]="pieChartOptions"
+          [type]="'pie'"
+        >
+        </canvas>
+      </div>
+    </div>
+
+    <!-- <div class="bg-white shadow rounded-lg p-4 mt-4">
+      <h2 class="text-lg font-semibold mb-2 text-center">
+        Total de ventas por fecha
+      </h2>
+      <canvas
+        baseChart
+        [data]="{
+          labels: ventasPorFechaLabels,
+          datasets: [{ data: ventasPorFechaData }]
+        }"
+        [options]="pieChartOptions"
+        [type]="'pie'"
+      >
+      </canvas>
+    </div> -->
+    <div class="chart-card">
+      <div class="chart-item">
+        <h3 class="text-center mb-4">Ventas totales por cantidad vendida</h3>
+        <div style="max-width: 500px; margin: auto">
+          <canvas
+            baseChart
+            [data]="{
+              labels: ventasPorCantidadLabels,
+              datasets: [{ data: ventasPorCantidadData }]
+            }"
+            [type]="pieChartTypeCantidad"
+            [options]="pieChartOptionsCantidad"
+          >
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
