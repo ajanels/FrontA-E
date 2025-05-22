@@ -204,7 +204,8 @@ button.btn {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 40px; /* nuevo */
   justify-content: center;
   z-index: 1000;
   overflow-y: auto;
@@ -226,10 +227,11 @@ button.btn {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   animation: modalFadeIn 0.3s ease;
   position: relative;
-  margin: auto;
-  z-index: 1010; /* Mayor que el backdrop */
-  pointer-events: auto; /* Asegurar que reciba eventos del mouse */
+  margin: 40px auto auto auto; /* <-- cambia esto */
+  z-index: 1010;
+  pointer-events: auto;
 }
+
 
 /* Asegurar que todos los elementos dentro del modal sean interactivos */
 .modal-dialog *, .modal-categorias-dialog * {

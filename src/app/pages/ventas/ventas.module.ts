@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     VentasRoutingModule,
     FormsModule,
-  ],
+  ]
   exports: [
     VentasComponent
   ],

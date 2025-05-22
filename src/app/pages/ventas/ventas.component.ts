@@ -47,6 +47,9 @@ export class VentasComponent implements OnInit {
   };
 
   totalVenta: number = 0;
+  montoRecibido: number = 0;
+  cambio: number = 0;
+
   mensajeError: string = '';
 
   constructor(
@@ -521,6 +524,11 @@ export class VentasComponent implements OnInit {
   // }
   
   confirmarVenta() {
+    if (this.montoRecibido < this.totalCarrito) {
+    alert('El monto recibido no es suficiente para cubrir el total.');
+    return;
+    }
+
     if (!this.carritoVentas.length) {
       return alert('El carrito está vacío.');
     }
@@ -566,11 +574,16 @@ export class VentasComponent implements OnInit {
     alert('Ventas registradas y facturas en curso.');
     this.carritoVentas = [];
     this.totalCarrito = 0;
+    // Resetear valores
+    this.montoRecibido = 0;
+    this.cambio = 0;
     this.obtenerVentas();
   }
   
   
-  
+  actualizarCambio() {
+  this.cambio = this.montoRecibido - this.totalCarrito;
+}
 
   // Abrir/Cerrar el sidebar
   toggleSidebar() {

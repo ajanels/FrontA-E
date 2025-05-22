@@ -9,18 +9,15 @@ import { UsuarioService } from './services/usuario.service';
 import { AuthInterceptor } from './auth/auth-interceptor.service';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component'; // Importa el componente
 
-
 @NgModule({
-  declarations: [
-  
-  ],
+  declarations: [],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     AppComponent,
-    UsuariosComponent
+    UsuariosComponent,
   ],
   providers: [
     UsuarioService,

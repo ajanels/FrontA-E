@@ -1,0 +1,207 @@
+/* === GENERAL === */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+}
+
+/* === CONTENEDOR PRINCIPAL === */
+.report-container {
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(to bottom, #f9fafb, #e5e7eb);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.report-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #1f2937;
+}
+
+.report-container button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 35px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.report-container button:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+/* === GRID DE GRÁFICAS === */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+  width: 100%;
+  max-width: 1000px;
+  box-sizing: border-box;
+}
+
+/* === TARJETAS DE CADA GRÁFICA === */
+.chart-item {
+  background: white;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.3s ease;
+  min-height: 440px;
+  overflow: hidden;
+  page-break-after: always; /* Una gráfica por hoja */
+  break-after: page;
+}
+
+.chart-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+.chart-item h2,
+.chart-item h3 {
+  text-align: center;
+  width: 100%;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #111827;
+  font-weight: 600;
+}
+
+/* === GRÁFICOS CANVAS === */
+.chart-item canvas {
+  width: 100% !important;
+  height: 320px !important;
+  max-height: 320px !important;
+  display: block;
+  margin: auto;
+}
+
+.chart-item canvas[type="pie"],
+.chart-item canvas[type='pie'] {
+  height: 300px !important;
+  max-width: 360px !important;
+  margin: 0 auto;
+}
+
+/* Pie chart wrapper */
+.pie-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .report-container h1 {
+    font-size: 2rem;
+    margin-bottom: 24px;
+  }
+
+  .report-container button {
+    width: 100%;
+  }
+
+  .chart-item {
+    min-height: 360px;
+    padding: 18px;
+  }
+
+  .chart-item h2,
+  .chart-item h3 {
+    font-size: 1.25rem;
+  }
+
+  .chart-item canvas {
+    height: 260px !important;
+  }
+
+  .chart-item canvas[type='pie'] {
+    height: 240px !important;
+    max-width: 300px !important;
+  }
+}
+
+/* === IMPRESIÓN / EXPORTACIÓN PDF === */
+@media print {
+  html, body {
+    background: white !important;
+    color: black !important;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .report-container button,
+  .no-print {
+    display: none !important;
+  }
+
+  .report-container {
+    padding: 10px;
+    background: white !important;
+  }
+
+  .charts-grid {
+    display: block;
+    width: 100%;
+  }
+
+  .chart-item {
+    border: 1px solid #aaa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: none;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .chart-item h2,
+  .chart-item h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: black !important;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 6px;
+  }
+
+  .chart-item canvas {
+    width: 100% !important;
+    height: 300px !important;
+    max-height: 300px !important;
+    display: block;
+    margin: auto;
+  }
+
+  .chart-item canvas[type='pie'] {
+    height: 280px !important;
+    max-width: 320px !important;
+  }
+}

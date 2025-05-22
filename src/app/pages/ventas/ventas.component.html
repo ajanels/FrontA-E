@@ -29,7 +29,7 @@
   </div>
   <!-- Botón de carrito flotante -->
   <button class="btn-carrito" (click)="toggleSidebar()">
-    🛒({{ carritoVentas.length }})
+    🛒
   </button>
 
   <!-- Sidebar del carrito -->
@@ -89,12 +89,37 @@
       </select>
     </div>
     
-    <div class="carrito-total">
-      <h3>Total: Q{{ totalCarrito | number : "1.2-2" }}</h3>
+    <!-- <div class="carrito-total">
+      <h3>Total: Q.{{ totalCarrito | number : "1.2-2" }}</h3>
+      <h3>Recibido: Q.</h3>
+      <h3>Cambio: Q.</h3>
       <button class="btn-confirmar" (click)="confirmarVenta()">
         Confirmar Venta
       </button>
       <button class="btn-cerrar" (click)="toggleSidebar()">Cerrar</button>
-    </div>
+    </div> -->
+    <div class="carrito-total">
+  <h3>Total: Q.{{ totalCarrito | number: '1.2-2' }}</h3>
+
+  <label for="montoRecibido">Recibido: </label>
+  <input
+    type="number"
+    id="montoRecibido"
+    [(ngModel)]="montoRecibido"
+    (input)="actualizarCambio()"
+    min="0"
+    placeholder="Ingrese monto recibido"
+  />
+
+  <h3 [ngClass]="{ 'texto-error': cambio < 0 }">
+    Cambio: Q.{{ cambio | number: '1.2-2' }}
+  </h3>
+
+  <button class="btn-confirmar" [disabled]="cambio < 0" (click)="confirmarVenta()">
+    Confirmar Venta
+  </button>
+
+  <button class="btn-cerrar" (click)="toggleSidebar()">Cerrar</button>
+</div>
   </div>
 </div>

@@ -5,6 +5,7 @@ import { ChartConfiguration, ChartData, ChartOptions } from 'chart.js';
 import { ReportesService } from './reportes.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BaseChartDirective } from 'ng2-charts';
+import html2pdf from 'html2pdf.js';
 
 @Component({
   selector: 'app-reportes',
@@ -19,9 +20,6 @@ export class ReportesComponent implements OnInit {
   @ViewChild('barChartDisponibilidad', { read: BaseChartDirective })
   barChartDisponibilidad: BaseChartDirective | undefined;
 
-  //Cate
-  // @ViewChild('barChartPromedio', { read: BaseChartDirective })
-  // barChartPromedio: BaseChartDirective | undefined;
   @ViewChild('barChartTopProductos', { read: BaseChartDirective })
   barChartTopProductos: BaseChartDirective | undefined;
 
@@ -34,7 +32,7 @@ export class ReportesComponent implements OnInit {
   productosMasVendidosLabels: string[] = [];
   productosMasVendidosData: number[] = [];
 
-   pieChartLabels: string[] = [];
+  pieChartLabels: string[] = [];
   pieChartData: number[] = [];
   pieChartType: string = 'pie';
 
@@ -77,27 +75,14 @@ export class ReportesComponent implements OnInit {
   ventasPorCantidadLabels: string[] = [];
   ventasPorCantidadData: number[] = [];
 
-    public pieChartOptionsCantidad: ChartOptions<'pie'> = {
+  public pieChartOptionsCantidad: ChartOptions<'pie'> = {
     responsive: true,
     plugins: {
-      legend: { position: 'bottom' }
-    }
+      legend: { position: 'bottom' },
+    },
   };
   public pieChartTypeCantidad: 'pie' = 'pie';
 
-
-  //Categoria
-  //   public barChartDataPromedio: ChartData<'bar'> = {
-  //   labels: [],
-  //   datasets: [{ data: [], label: 'Promedio Stock' }]
-  // };
-
-  // public barChartOptionsPromedio: ChartOptions<'bar'> = {
-  //   responsive: true,
-  // };
-
-  // public barChartTypePromedio: 'bar' = 'bar';
-  // public barChartLegendPromedio = true;
   public barChartDataTopProductos: ChartData<'bar'> = {
     labels: [],
     datasets: [{ data: [], label: 'Stock' }],
@@ -159,19 +144,6 @@ export class ReportesComponent implements OnInit {
     );
   }
 
-  //Cat
-  //   obtenerPromedioStockPorCategoria(): void {
-  //   this.reportesService.obtenerPromedioStockPorCategoria().subscribe(
-  //     (data: any[]) => {
-  //       this.barChartDataPromedio.labels = data.map(item => item.categoria);
-  //       this.barChartDataPromedio.datasets[0].data = data.map(item => item.promedioStock);
-  //       this.barChartPromedio?.update();
-  //     },
-  //     error => {
-  //       console.error('Error al obtener promedio por categoría:', error);
-  //     }
-  //   );
-  // }
   obtenerTopProductosPorStock(): void {
     this.reportesService.obtenerTopProductosStock().subscribe(
       (data: any[]) => {
@@ -202,17 +174,27 @@ export class ReportesComponent implements OnInit {
     });
   }
 
-    private cargarVentasPorCantidad(): void {
-    this.reportesService.getVentasPorCantidad().subscribe(data => {
-      this.ventasPorCantidadLabels = data.map(d => d.cantidad.toString());
-      this.ventasPorCantidadData   = data.map(d => d.totalVentas);
+  private cargarVentasPorCantidad(): void {
+    this.reportesService.getVentasPorCantidad().subscribe((data) => {
+      this.ventasPorCantidadLabels = data.map((d) => d.cantidad.toString());
+      this.ventasPorCantidadData = data.map((d) => d.totalVentas);
     });
   }
-  // cargarVentasPorFecha(): void {
-  //   this.reportesService.getVentasPorFecha().subscribe((data) => {
-  //     this.ventasPorFechaLabels = data.map((d: any) => d.fecha);
-  //     this.ventasPorFechaData = data.map((d: any) => d.total);
-  //   });
-  // }
 
+  //PDF
+  exportarPDF(): void {
+    const elemento = document.getElementById('contenido-a-exportar');
+
+    if (elemento) {
+      const opciones: any = {
+        margin: 10,
+        filename: 'reporte.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 1.5, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      };
+
+      html2pdf().from(elemento).set(opciones).save();
+    }
+  }
 }
