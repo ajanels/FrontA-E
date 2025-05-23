@@ -1,0 +1,231 @@
+.categorias-container {
+  max-width: 1000px; /* Máximo ancho para pantallas grandes */
+  width: 95%;         /* Ocupa casi todo el ancho disponible */
+  margin: 40px auto;
+  padding: 20px;
+  background: linear-gradient(to right, #bfc0c36c);
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Incluye padding en el ancho */
+}
+
+/* Formulario se expande y los inputs también */
+form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: space-between; /* Para que queden separados */
+  flex-wrap: wrap; /* Que los inputs bajen si no caben */
+}
+
+form input {
+  flex: 1 1 45%; /* Crecen, pero no menos del 45% */
+  min-width: 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+form button {
+  flex: 1 1 100px;
+  min-width: 120px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #0a25d2;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: center; /* Que el botón esté alineado verticalmente */
+}
+
+form button:hover {
+  background-color: #068add;
+;
+}
+
+/* Tabla ocupa todo el ancho */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  table-layout: fixed;
+}
+
+th,
+td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Ancho columnas */
+th:nth-child(1),
+td:nth-child(1) {
+  width: 8%;
+  min-width: 60px;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 28%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  width: 34%;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+  width: 30%;
+  min-width: 180px;
+}
+
+/* Botones en fila con espacio */
+td:nth-child(4) {
+  display: flex;
+  gap: 15px;
+}
+
+td button {
+  flex: 1;
+  padding: 10px 12px;
+  font-size: 1rem;
+  white-space: nowrap;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background-color: #0a25d2;
+  transition: background-color 0.3s;
+}
+
+td button:hover {
+  background-color: #068add;
+}
+
+td button:last-child {
+  background-color: #f44336;
+}
+
+td button:last-child:hover {
+  background-color: #a22;
+}
+
+/* Modal ancho y centrado */
+/* ---------- Overlay ---------- */
+.modal {
+  position: fixed;
+  inset: 0;                       /* top:0; right:0; bottom:0; left:0 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.55);  /* oscurece el fondo */
+  z-index: 1000;
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* ---------- Ventana ---------- */
+.modal-content {
+  width: 92%;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+  padding: 26px 28px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: scaleIn 0.25s ease-out forwards;
+}
+
+/* Encabezado */
+.modal-content h3 {
+  margin: 0 0 6px;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #005f63;
+  text-align: center;
+}
+
+/* Inputs */
+.modal-content input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #c7c7c7;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.modal-content input:focus {
+  outline: none;
+  border-color: #00188f;
+}
+
+/* ---------- Botonera ---------- */
+.modal-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 12px 0;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+/* Botón Guardar – verde */
+.btn-guardar {
+  background-color: #0a25d2;
+}
+.btn-guardar:hover {
+  background-color: #068add;
+}
+
+/* Botón Cancelar – rojo */
+.btn-cancelar {
+  background-color: #f44336;
+}
+.btn-cancelar:hover {
+  background-color: #a22;
+}
+
+/* ---------- Animaciones ---------- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 20px 22px;
+  }
+  .modal-content h3 {
+    font-size: 1.2rem;
+  }
+}

@@ -5,11 +5,13 @@ import { ChartConfiguration, ChartData, ChartOptions } from 'chart.js';
 import { ReportesService } from './reportes.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BaseChartDirective } from 'ng2-charts';
+import { NgChartsModule } from 'ng2-charts';
+
 
 @Component({
   selector: 'app-reportes',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule, BaseChartDirective],
+  imports: [CommonModule, RouterModule, HttpClientModule,  NgChartsModule],
   templateUrl: './reportes.component.html',
   styleUrl: './reportes.component.css',
   providers: [ReportesService],

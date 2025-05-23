@@ -5,14 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { UsuarioService } from './services/usuario.service';
+
 // Importar Interceptor
 import { AuthInterceptor } from './auth/auth-interceptor.service';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component'; // Importa el componente
+import { CategoriasComponent } from './pages/mantenimiento/categorias/categorias.component';
+
 
 
 @NgModule({
   declarations: [
-  
+
   ],
   imports: [
     BrowserModule,
@@ -20,7 +23,8 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component'; // Impo
     FormsModule,
     HttpClientModule,
     AppComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    CategoriasComponent
   ],
   providers: [
     UsuarioService,

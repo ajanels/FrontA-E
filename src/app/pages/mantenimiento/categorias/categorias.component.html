@@ -1,0 +1,87 @@
+<div class="categorias-container">
+  <h2>Categorías de Productos</h2>
+
+  <!-- Formulario de nueva categoría -->
+  <form (ngSubmit)="guardarCategoria()" #categoriaForm="ngForm">
+    <input
+      type="text"
+      name="nombre"
+      [(ngModel)]="nuevaCategoria.catProductoNombre"
+      placeholder="Nombre de la categoría"
+      required
+    />
+    <input
+      type="text"
+      name="descripcion"
+      [(ngModel)]="nuevaCategoria.catProductoDescripcion"
+      placeholder="Descripción"
+      required
+    />
+    <button type="submit" [disabled]="categoriaForm.invalid">Guardar</button>
+  </form>
+
+  <!-- Tabla de categorías -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let categoria of categorias">
+        <td>{{ categoria.catProductoId }}</td>
+        <td>{{ categoria.catProductoNombre }}</td>
+        <td>{{ categoria.catProductoDescripcion }}</td>
+        <td>
+          <button (click)="abrirModalEdicion(categoria)">Editar</button>
+          <button (click)="eliminarCategoria(categoria.catProductoId)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal de edición -->
+  <!-- Modal de edición de categoría -->
+<div
+  *ngIf="mostrarModalEdicion"
+  class="modal"
+  (click)="cerrarModal()"
+>
+  <!-- Detenemos la propagación para que no se cierre al hacer clic dentro -->
+  <div
+    class="modal-content"
+    (click)="$event.stopPropagation()"
+  >
+    <h3>Editar categoría</h3>
+
+    <input
+      [(ngModel)]="categoriaSeleccionada.catProductoNombre"
+      placeholder="Nombre"
+    />
+    <input
+      [(ngModel)]="categoriaSeleccionada.catProductoDescripcion"
+      placeholder="Descripción"
+    />
+
+    <div class="modal-actions">
+      <button
+        class="btn-guardar"
+        (click)="guardarEdicion()"
+      >
+        Guardar
+      </button>
+      <button
+        class="btn-cancelar"
+        (click)="cerrarModal()"
+      >
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>
+
+
+</div>

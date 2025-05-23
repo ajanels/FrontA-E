@@ -1,5 +1,66 @@
-<div class="content">
-  <h1>Página de Proveedores</h1>
-  <p>Bienvenido a la sección de Proveedores</p>
-</div>
+<div class="proveedores-container">
+  <h1 class="titulo">Proveedores</h1>
+  <div class="barra-busqueda">
+    <input type="text" [(ngModel)]="busqueda" (input)="filtrar()" placeholder="🔍 search" />
+    <button (click)="abrirModal()">＋</button>
+  </div>
 
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>Email</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of filtrados">
+        <td>{{ p.proveedorNombre }}</td>
+        <td>{{ p.proveedorDireccion }}</td>
+        <td>{{ p.proveedorTelefono }}</td>
+        <td>{{ p.proveedorEmail }}</td>
+        <td>{{ p.proveedorEstado }}</td>
+        <td>
+          <button (click)="abrirModal(true, p)">✏️</button>
+          <button (click)="eliminar(p.proveedorId)">🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal" [class.show]="modalAbierto">
+    <div class="modal-contenido">
+      <h2>{{ editando ? 'Editar Proveedor' : 'Agregar Proveedor' }}</h2>
+      <form (ngSubmit)="guardar()">
+        <label>Nombre</label>
+        <input [(ngModel)]="proveedor.proveedorNombre" name="proveedorNombre" placeholder="Nombre" required />
+
+        <label>Dirección</label>
+        <input [(ngModel)]="proveedor.proveedorDireccion" name="proveedorDireccion" placeholder="Dirección" required />
+
+        <label>Teléfono</label>
+        <input [(ngModel)]="proveedor.proveedorTelefono" name="proveedorTelefono" placeholder="Teléfono" />
+
+        <label>Email</label>
+        <input [(ngModel)]="proveedor.proveedorEmail" name="proveedorEmail" placeholder="Email" />
+
+        <label for="estado">Estado</label>
+          <select id="estado" title="Estado del proveedor" [(ngModel)]="proveedor.proveedorEstado" name="proveedorEstado">
+            <option value="A">Activo</option>
+            <option value="I">Inactivo</option>
+          </select>
+
+
+
+        <div class="botones">
+          <button class="agregar" type="submit">{{ editando ? 'Actualizar' : 'Agregar' }}</button>
+          <button class="cancelar" type="button" (click)="cerrarModal()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

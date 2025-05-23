@@ -1,14 +1,16 @@
+// src/app/pages/proveedores/proveedores.module.ts
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+import { ProveedoresComponent } from './proveedores.component';
 
-import { ProveedoresRoutingModule } from './proveedores-routing.module';
-
+const routes: Routes = [
+  { path: '', component: ProveedoresComponent }
+];
 
 @NgModule({
-  declarations: [],
   imports: [
-    CommonModule,
-    ProveedoresRoutingModule
+    RouterModule.forChild(routes),
+    ProveedoresComponent  // ← aquí, no en declarations
   ]
 })
-export class ProveedoresModule { }
+export class ProveedoresModule {}

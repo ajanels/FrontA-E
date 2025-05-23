@@ -1,0 +1,35 @@
+.report-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Crea dos columnas de igual ancho */
+    gap: 20px; /* Espacio entre los gráficos */
+    width: 100%; /* O el ancho que desees para la cuadrícula */
+    max-width: 1200px; /* Ancho máximo opcional */
+  }
+  
+  .chart-item {
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .chart-item h2 {
+    font-size: 1.2em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  /* Opcional: Ajustes para pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .charts-grid {
+      grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    }
+  }
